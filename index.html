@@ -13,13 +13,16 @@
             height: 100vh;
             margin: 0;
             font-family: "Tahoma", sans-serif;
+            padding: 10px; /* Tambahan padding agar tidak mentok di pinggir HP */
+            box-sizing: border-box;
         }
         .window {
             background-color: #f0f0f0;
             border: 2px solid #999;
             border-top-color: #fff;
             border-left-color: #fff;
-            width: 450px;
+            width: 100%; /* Ubah menjadi 100% */
+            max-width: 450px; /* Batas maksimal lebar untuk PC */
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
         .title-bar {
@@ -57,8 +60,10 @@
         }
         .form-group input[type="text"], .form-group select {
             flex: 1;
-            padding: 3px;
+            padding: 5px; /* Sedikit dilebarkan agar mudah diketik di HP */
             border: 1px solid #7f9db9;
+            box-sizing: border-box;
+            width: 100%;
         }
         .checkbox-group {
             margin: 15px 0;
@@ -74,7 +79,7 @@
             border: 1px solid #fff;
             border-bottom-color: #666;
             border-right-color: #666;
-            padding: 4px 20px;
+            padding: 6px 20px;
             cursor: pointer;
             font-family: "Tahoma", sans-serif;
             font-size: 13px;
@@ -89,6 +94,25 @@
             color: #666;
             font-size: 11px;
             margin-top: 15px;
+        }
+
+        /* MEDIA QUERY UNTUK TAMPILAN HP */
+        @media (max-width: 480px) {
+            .form-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .form-group label {
+                width: 100%;
+                margin-bottom: 5px; /* Jarak antara teks dan kolom input */
+            }
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn {
+                width: 100%; /* Tombol melebar penuh di HP agar mudah ditekan */
+            }
         }
     </style>
 </head>
@@ -145,7 +169,6 @@
     </div>
 
     <script>
-        // Ganti URL ini dengan URL Web App dari Google Apps Script kamu nanti
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxLRShvuBZOgMo--8kQQNnFIzggzbHvCArxXESdJEXmXGbrgc6Rt1R6eCEjD11OaA4hQw/exec';
         const form = document.forms['santet-form'];
         const btnSubmit = document.getElementById('btnSubmit');
