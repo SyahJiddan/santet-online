@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santet Online V.1.5</title>
+    <style>
+        body {
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Tahoma", sans-serif;
+        }
+        .window {
+            background-color: #f0f0f0;
+            border: 2px solid #999;
+            border-top-color: #fff;
+            border-left-color: #fff;
+            width: 450px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .title-bar {
+            background: linear-gradient(to right, #0058e6, #3a93ff);
+            color: white;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .title-bar-controls span {
+            background-color: #ece9d8;
+            color: black;
+            border: 1px solid #fff;
+            border-bottom-color: #666;
+            border-right-color: #666;
+            padding: 1px 6px;
+            font-size: 12px;
+            cursor: default;
+            margin-left: 2px;
+        }
+        .content {
+            padding: 15px 20px;
+            font-size: 13px;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            width: 200px;
+        }
+        .form-group input[type="text"], .form-group select {
+            flex: 1;
+            padding: 3px;
+            border: 1px solid #7f9db9;
+        }
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #f0f0f0;
+            border: 1px solid #fff;
+            border-bottom-color: #666;
+            border-right-color: #666;
+            padding: 4px 20px;
+            cursor: pointer;
+            font-family: "Tahoma", sans-serif;
+            font-size: 13px;
+        }
+        .btn:active {
+            border: 1px solid #666;
+            border-bottom-color: #fff;
+            border-right-color: #fff;
+        }
+        .footer-text {
+            text-align: right;
+            color: #666;
+            font-size: 11px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="title-bar">
+            <span>Santet Online V.1.5</span>
+            <div class="title-bar-controls">
+                <span>_</span><span>☐</span><span style="color:red; font-weight:bold;">X</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <form name="santet-form" id="santetForm">
+                <div class="form-group">
+                    <label>Santet Atas Nama :</label>
+                    <input type="text" name="pengirim" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nama Orang Yang Mau Di Santet :</label>
+                    <input type="text" name="target" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Jenis Santet :</label>
+                    <select name="jenis">
+                        <option value="Kawat Muncul Di Perut">Kawat Muncul Di Perut</option>
+                        <option value="Muntah Darah">Muntah Darah</option>
+                        <option value="Muntah Paku">Muntah Paku</option>
+                        <option value="Kawat Muncul Di Kaki">Kawat Muncul Di Kaki</option>
+                        <option value="Meninggal">Meninggal</option>
+                        <option value="Kejang Kejang">Kejang Kejang</option>
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="permanen" value="Ya"> Santet Permanen
+                    </label>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn" id="btnSubmit">Mulai Santet</button>
+                    <button type="reset" class="btn">Batal Santet</button>
+                </div>
+                
+                <div class="footer-text">
+                    Santet Online V.1.5 Beta
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Ganti URL ini dengan URL Web App dari Google Apps Script kamu nanti
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxLRShvuBZOgMo--8kQQNnFIzggzbHvCArxXESdJEXmXGbrgc6Rt1R6eCEjD11OaA4hQw/exec';
+        const form = document.forms['santet-form'];
+        const btnSubmit = document.getElementById('btnSubmit');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btnSubmit.innerText = 'Memproses...';
+            btnSubmit.disabled = true;
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    alert('Proses Selesai!\nSantet berhasil dikirim ke database gaib (Spreadsheet).');
+                    btnSubmit.innerText = 'Mulai Santet';
+                    btnSubmit.disabled = false;
+                    form.reset();
+                })
+                .catch(error => {
+                    alert('Gagal mengirim! Periksa koneksi internet.');
+                    btnSubmit.innerText = 'Mulai Santet';
+                    btnSubmit.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
